@@ -36,14 +36,13 @@ class FbSdkProvider extends Component {
 
     onLoad() {
         const FB = window.FB;
-        console.log('--> Loaded SDK');
-        console.log(FB);
 
         try {
             FB.init({
                 appId: '463375200785413',
-                cookie: true,
-                xfbml: true,
+                status: false,
+                cookie: false,
+                xfbml: false,
                 version: 'v2.12'
             });
 
