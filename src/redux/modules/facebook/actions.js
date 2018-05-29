@@ -13,11 +13,14 @@ export function fbLogin() {
 
 export const FB_LOGIN_SUCCESS = `${NAMESPACE}FB_LOGIN_SUCCESS`;
 
-export function fbLoginSuccess(accessToken) {
+export function fbLoginSuccess(accessToken, userName, userId, userPicture) {
     return {
         type: FB_LOGIN_SUCCESS,
         payload: {
             accessToken,
+            userName,
+            userId,
+            userPicture,
         },
     };
 }

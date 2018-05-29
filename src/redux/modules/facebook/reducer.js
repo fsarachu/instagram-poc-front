@@ -2,6 +2,9 @@ import {FB_LOGIN, FB_LOGIN_FAILURE, FB_LOGIN_SUCCESS} from "./actions";
 
 const initialState = {
     accessToken: null,
+    userName: null,
+    userId: null,
+    userPicture: null,
     isLoggingIn: false,
     loginError: null,
 };
@@ -24,6 +27,9 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 accessToken: payload.accessToken,
+                userName: payload.userName,
+                userId: payload.userId,
+                userPicture: payload.userPicture,
                 isLoggingIn: false,
                 loginError: null,
             };
