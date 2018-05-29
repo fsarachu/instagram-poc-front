@@ -36,3 +36,37 @@ export function fbLoginFailure(error) {
         },
     };
 }
+
+
+export const GET_PAGES = `${NAMESPACE}GET_PAGES`;
+
+export function getPages() {
+    return {
+        type: GET_PAGES,
+        payload: {},
+    };
+}
+
+
+export const GET_PAGES_SUCCESS = `${NAMESPACE}GET_PAGES_SUCCESS`;
+
+export function getPagesSuccess(pages) {
+    return {
+        type: GET_PAGES_SUCCESS,
+        payload: {
+            pages
+        },
+    };
+}
+
+
+export const GET_PAGES_FAILURE = `${NAMESPACE}GET_PAGES_FAILURE`;
+
+export function getPagesFailure(error) {
+    return {
+        type: GET_PAGES_FAILURE,
+        payload: {
+            error,
+        },
+    };
+}
