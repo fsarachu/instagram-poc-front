@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Redirect} from "react-router-dom";
+import {Redirect, Switch, Route} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {fbLogin} from "../../redux/modules/facebook/actions";
 import {hasAccessToken, isLoggingIn, loginError} from "../../redux/modules/facebook/selectors";
 import {isAuthenticated} from "../../redux/modules/session/selectors";
+import User from "./User";
+import Page from "./Page";
 
 class Login extends Component {
 
     render() {
-        const {isLoggingIn, loginError, hasAccessToken, fbLogin, location, isAuthenticated} = this.props;
+        const {match, location, isAuthenticated} = this.props;
 
         const {from} = location.state || {from: {pathname: '/'}};
 
@@ -21,30 +23,26 @@ class Login extends Component {
         }
 
         return (
-            <section className='Login section'>
-                <div className="container is-fluid has-text-centered">
+            <Switch>
 
-                    <h1 className="title">Login with Facebook</h1>
+                <Route
+                    path={`${match.url}/user`}
+                    component={User}
+                />
 
-                    {hasAccessToken ? (
-                        <h3>Logged In :)</h3>
-                    ) : (
-                        <button onClick={fbLogin}
-                                className={`button is-large is-link ${isLoggingIn ? 'is-loading' : ''}`}
-                                disabled={isLoggingIn}
-                        >
-                        <span className="icon">
-                            <i className="fab fa-facebook"></i>
-                        </span>
-                            <span>Login</span>
-                        </button>
-                    )}
+                <Route
+                    path={`${match.url}/page`}
+                    component={Page}
+                />
 
+                <Route
+                    path={`${match.url}/connect`}
+                    render={() => <h1>Connect</h1>}
+                />
 
-                    {loginError}
+                <Route render={() => <Redirect to={`${match.url}/user`}/>}/>
 
-                </div>
-            </section>
+            </Switch>
         );
     }
 }
@@ -56,6 +54,7 @@ Login.propTypes = {
     loginError: PropTypes.string,
     fbLogin: PropTypes.func.isRequired,
     location: PropTypes.object,
+    match: PropTypes.object,
 };
 
 
