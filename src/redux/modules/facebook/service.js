@@ -23,6 +23,20 @@ export function login() {
     });
 }
 
+export function getUser() {
+    return new Promise((resolve, reject) => {
+        const callback = (response) => {
+            if (!response || response.error) {
+                reject("Error fetching facebook user profile");
+            } else {
+                resolve(response);
+            }
+        };
+
+        window.FB.api('/v3.0/me?fields=name,picture{url}', 'GET', {}, callback);
+    });
+}
+
 export function getPages() {
     return new Promise((resolve, reject) => {
         const callback = (response) => {
