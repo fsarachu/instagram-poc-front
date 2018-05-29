@@ -25,16 +25,14 @@ export function login() {
 
 export function getPages() {
     return new Promise((resolve, reject) => {
-        console.log('--> Get Pages');
         const callback = (response) => {
             if (!response || response.error) {
                 reject("Error fetching accounts");
             } else {
-                console.log(response);
-                resolve(response);
+                resolve(response.data);
             }
         };
 
-        window.FB.api('/v3.0/me/accounts?fields=connected_instagram_account,name,picture', 'GET', {}, callback);
+        window.FB.api('/v3.0/me/accounts?fields=id,connected_instagram_account,name,picture{url}', 'GET', {}, callback);
     });
 }
