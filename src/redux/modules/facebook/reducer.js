@@ -1,10 +1,14 @@
-import {FB_LOGIN, FB_LOGIN_FAILURE, FB_LOGIN_SUCCESS} from "./actions";
+import {FB_LOGIN, FB_LOGIN_FAILURE, FB_LOGIN_SUCCESS, GET_PAGES, GET_PAGES_SUCCESS, GET_PAGES_FAILURE} from "./actions";
 
 const initialState = {
     accessToken: null,
     userName: null,
     userId: null,
     userPicture: null,
+    pages: [],
+    selectedPageId: null,
+    isFetchingPages: false,
+    errorFetchingPages: null,
     isLoggingIn: false,
     loginError: null,
 };
@@ -40,6 +44,31 @@ export default function (state = initialState, action) {
                 ...state,
                 isLoggingIn: false,
                 loginError: payload.error,
+            };
+        }
+
+        case GET_PAGES: {
+            return {
+                ...state,
+                isFetchingPages: true,
+                errorFetchingPages: null,
+            };
+        }
+
+        case GET_PAGES_SUCCESS: {
+            return {
+                ...state,
+                pages: payload.pages,
+                isFetchingPages: false,
+                errorFetchingPages: null,
+            };
+        }
+
+        case GET_PAGES_FAILURE: {
+            return {
+                ...state,
+                isFetchingPages: false,
+                errorFetchingPages: payload.error,
             };
         }
 
