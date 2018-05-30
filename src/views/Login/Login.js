@@ -1,48 +1,87 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Redirect, Switch, Route} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
+import {Container, Icon, Segment, Step} from 'semantic-ui-react'
 
-import {fbLogin} from "../../redux/modules/facebook/actions";
-import {hasAccessToken, isLoggingIn, loginError} from "../../redux/modules/facebook/selectors";
+import {hasAccessToken, hasSelectedPage} from "../../redux/modules/facebook/selectors";
 import {isAuthenticated} from "../../redux/modules/session/selectors";
 import User from "./User";
 import Page from "./Page";
+import Confirm from "./Confirm";
 
 class Login extends Component {
 
     render() {
-        const {match, location, isAuthenticated} = this.props;
-
-        const {from} = location.state || {from: {pathname: '/'}};
+        const {match, isAuthenticated, hasAccessToken, hasSelectedPage} = this.props;
 
         if (isAuthenticated) {
             return (
-                <Redirect to={from}/>
+                <Redirect to='/'/>
             );
         }
 
         return (
-            <Switch>
+            <Container>
 
-                <Route
-                    path={`${match.url}/user`}
-                    component={User}
-                />
+                <Segment basic padded textAlign='center'>
+                    <Step.Group>
 
-                <Route
-                    path={`${match.url}/page`}
-                    component={Page}
-                />
+                        <Step
+                            active={!hasAccessToken}
+                            disabled={hasAccessToken}
+                        >
+                            <Icon name='user'/>
+                            <Step.Content>
+                                <Step.Title>Facebook Log in</Step.Title>
+                            </Step.Content>
+                        </Step>
 
-                <Route
-                    path={`${match.url}/connect`}
-                    render={() => <h1>Connect</h1>}
-                />
+                        <Step
+                            active={hasAccessToken && !hasSelectedPage}
+                            disabled={!(hasAccessToken && !hasSelectedPage)}
+                        >
+                            <Icon name='building'/>
+                            <Step.Content>
+                                <Step.Title>Connect Your Business Page</Step.Title>
+                            </Step.Content>
+                        </Step>
 
-                <Route render={() => <Redirect to={`${match.url}/user`}/>}/>
+                        <Step
+                            active={hasAccessToken && hasSelectedPage}
+                            disabled={!(hasAccessToken && hasSelectedPage)}
+                        >
+                            <Icon name='check'/>
+                            <Step.Content>
+                                <Step.Title>Confirm</Step.Title>
+                            </Step.Content>
+                        </Step>
 
-            </Switch>
+                    </Step.Group>
+                </Segment>
+
+                <Switch>
+
+                    <Route
+                        path={`${match.url}/user`}
+                        component={User}
+                    />
+
+                    <Route
+                        path={`${match.url}/page`}
+                        component={Page}
+                    />
+
+                    <Route
+                        path={`${match.url}/confirm`}
+                        component={Confirm}
+                    />
+
+                    <Route render={() => <Redirect to={`${match.url}/user`}/>}/>
+
+                </Switch>
+
+            </Container>
         );
     }
 }
@@ -50,9 +89,7 @@ class Login extends Component {
 Login.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
     hasAccessToken: PropTypes.bool.isRequired,
-    isLoggingIn: PropTypes.bool.isRequired,
-    loginError: PropTypes.string,
-    fbLogin: PropTypes.func.isRequired,
+    hasSelectedPage: PropTypes.bool.isRequired,
     location: PropTypes.object,
     match: PropTypes.object,
 };
@@ -62,15 +99,10 @@ const mapStateToProps = (state) => {
     return {
         isAuthenticated: isAuthenticated(state),
         hasAccessToken: hasAccessToken(state),
-        isLoggingIn: isLoggingIn(state),
-        loginError: loginError(state),
+        hasSelectedPage: hasSelectedPage(state),
     };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    fbLogin() {
-        dispatch(fbLogin());
-    }
-});
+const mapDispatchToProps = (dispatch) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

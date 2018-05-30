@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
+import {Button, Container, Header, Icon, Message} from "semantic-ui-react";
 
 import {fbLogin} from "../../redux/modules/facebook/actions";
 import {hasAccessToken, isLoggingIn, loginError} from "../../redux/modules/facebook/selectors";
@@ -18,26 +19,30 @@ class User extends Component {
         }
 
         return (
-            <section className='Login section'>
-                <div className="container is-fluid has-text-centered">
+            <Container textAlign='center'>
 
-                    <h1 className="title">Login with Facebook</h1>
+                <Header as='h2' icon textAlign='center'>
+                    <Icon name='user' circular/>
+                    <Header.Content>
+                        Welcome!
+                    </Header.Content>
+                </Header>
 
-                    <button onClick={fbLogin}
-                            className={`button is-large is-link ${isLoggingIn ? 'is-loading' : ''}`}
-                            disabled={isLoggingIn}
-                    >
-                        <span className="icon">
-                            <i className="fab fa-facebook"></i>
-                        </span>
-                        <span>Login</span>
-                    </button>
+                <Button
+                    onClick={fbLogin}
+                    color='facebook'
+                    loading={isLoggingIn}
+                    disabled={isLoggingIn}
+                >
+                    <Icon name='facebook'/> Log In
+                </Button>
 
-
-                    {loginError}
-
-                </div>
-            </section>
+                {loginError && (
+                    <Message negative>
+                        <Message.Header>{loginError}</Message.Header>
+                    </Message>
+                )}
+            </Container>
         );
     }
 }
