@@ -38,6 +38,18 @@ export function loginFailure(error) {
 }
 
 
+export const SET_TOKEN = `${NAMESPACE}SET_TOKEN`;
+
+export function setToken(token) {
+    return {
+        type: SET_TOKEN,
+        payload: {
+            token
+        }
+    };
+}
+
+
 export const LOGOUT = `${NAMESPACE}LOGOUT`;
 
 export function logout() {

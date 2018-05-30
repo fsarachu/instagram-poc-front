@@ -6,7 +6,7 @@ import {login as loginApi} from "./service";
 export function* login(action) {
     try {
         const {accessToken, pageId} = action.payload;
-        const {token} = yield call(loginApi, accessToken, pageId);
+        const token = yield call(loginApi, accessToken, pageId);
         yield put(loginSuccess(token));
         yield call(localStorage.setItem.bind(localStorage), 'jwt', token);
     } catch (error) {
