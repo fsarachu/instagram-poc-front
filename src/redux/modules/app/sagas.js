@@ -1,6 +1,7 @@
 import {all, call, put, takeEvery} from "redux-saga/effects";
 
 import {LOAD_APP, loadAppFailure, loadAppSuccess} from "./actions";
+import {setToken} from "../session/actions";
 
 function loadFacebookSDK() {
     return new Promise((resolve, reject) => {
@@ -32,6 +33,8 @@ function initFacebookSDK() {
 
 export function* loadApp() {
     try {
+        const token = yield call(localStorage.getItem.bind(localStorage), 'jwt');
+        yield put(setToken(token));
         yield call(loadFacebookSDK);
         yield call(initFacebookSDK);
         yield put(loadAppSuccess());
