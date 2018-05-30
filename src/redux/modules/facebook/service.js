@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export function login() {
     return new Promise((resolve, reject) => {
         const callback = (result) => {
@@ -43,7 +45,12 @@ export function getPages() {
             if (!response || response.error) {
                 reject("Error fetching accounts");
             } else {
-                resolve(response.data);
+                resolve(response.data.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    picture: _.get(p, 'picture.data.url'),
+                    igAccountId: _.get(p, 'connected_instagram_account.id'),
+                })));
             }
         };
 
