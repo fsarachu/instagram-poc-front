@@ -1,4 +1,12 @@
-import {FB_LOGIN, FB_LOGIN_FAILURE, FB_LOGIN_SUCCESS, GET_PAGES, GET_PAGES_SUCCESS, GET_PAGES_FAILURE} from "./actions";
+import {
+    FB_LOGIN,
+    FB_LOGIN_FAILURE,
+    FB_LOGIN_SUCCESS,
+    GET_PAGES,
+    GET_PAGES_SUCCESS,
+    GET_PAGES_FAILURE,
+    SELECT_PAGE
+} from "./actions";
 
 const initialState = {
     accessToken: null,
@@ -70,6 +78,13 @@ export default function (state = initialState, action) {
                 isFetchingPages: false,
                 errorFetchingPages: payload.error,
             };
+        }
+
+        case SELECT_PAGE: {
+            return {
+                ...state,
+                selectedPageId: payload.pageId,
+            }
         }
 
         default: {

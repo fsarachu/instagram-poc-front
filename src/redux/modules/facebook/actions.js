@@ -13,7 +13,7 @@ export function fbLogin() {
 
 export const FB_LOGIN_SUCCESS = `${NAMESPACE}FB_LOGIN_SUCCESS`;
 
-export function fbLoginSuccess(accessToken, userName, userId, userPicture) {
+export function fbLoginSuccess(accessToken, userId, userName, userPicture) {
     return {
         type: FB_LOGIN_SUCCESS,
         payload: {
@@ -67,6 +67,17 @@ export function getPagesFailure(error) {
         type: GET_PAGES_FAILURE,
         payload: {
             error,
+        },
+    };
+}
+
+export const SELECT_PAGE = `${NAMESPACE}SELECT_PAGE`;
+
+export function selectPage(pageId) {
+    return {
+        type: SELECT_PAGE,
+        payload: {
+            pageId,
         },
     };
 }

@@ -38,6 +38,15 @@ export function selectedPageId(state) {
     return getState(state).selectedPageId;
 }
 
+export function selectedPage(state) {
+    const id = selectedPageId(state);
+    return pages(state).find(p => p.id === id);
+}
+
+export function hasSelectedPage(state) {
+    return !!selectedPageId(state);
+}
+
 export function isLoggingIn(state) {
     return getState(state).isLoggingIn;
 }
