@@ -38,12 +38,11 @@ class App extends Component {
                     />
 
                     <ProtectedRoute
-                        path='/'
+                        path='/me'
                         component={Me}
                     />
 
-
-                    <Route render={() => <Redirect to='/'/>}/>
+                    <Route render={() => <Redirect to='/me'/>}/>
 
                 </Switch>
             </BrowserRouter>
