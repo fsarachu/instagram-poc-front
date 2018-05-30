@@ -10,7 +10,7 @@ export function isLoggingIn(state) {
     return getState(state).isLoggingIn;
 }
 
-export function getLoginError(state) {
+export function loginError(state) {
     return getState(state).loginError;
 }
 
