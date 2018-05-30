@@ -33,7 +33,7 @@ export function getUser() {
             }
         };
 
-        window.FB.api('/v3.0/me?fields=name,picture{url}', 'GET', {}, callback);
+        window.FB.api('/v3.0/me?fields=first_name,picture{url}', 'GET', {}, callback);
     });
 }
 

@@ -7,7 +7,7 @@ export function* fbLogin() {
     try {
         const accessToken = yield call(service.login);
         const profile = yield call(service.getUser);
-        yield put(fbLoginSuccess(accessToken, profile.id, profile.name, profile.picture.data.url));
+        yield put(fbLoginSuccess(accessToken, profile.id, profile.first_name, profile.picture.data.url));
     } catch (error) {
         console.error(error);
         yield put(fbLoginFailure("Couldn't login to Facebook"));
