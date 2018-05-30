@@ -1,4 +1,4 @@
-import {LOGIN, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT} from "./actions";
+import {LOGIN, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, SET_TOKEN} from "./actions";
 
 const initialState = {
     token: null,
@@ -34,6 +34,13 @@ export default function (state = initialState, action) {
                 ...state,
                 isLoggingIn: false,
                 loginError: payload.error,
+            };
+        }
+
+        case SET_TOKEN: {
+            return {
+                ...state,
+                token: payload.token,
             };
         }
 
