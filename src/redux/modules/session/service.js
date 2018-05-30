@@ -1,12 +1,14 @@
 import axios from '../../axios';
 
 export function login(accessToken, pageId) {
-    return axios.post(`/auth/facebook`, {'access_token': accessToken})
+    return axios.post(`/auth/facebook`, {accessToken, pageId})
         .then(response => {
-            const token = response.headers['x-auth-token'];
-            if (token) {
-                localStorage.setItem('jwt', token);
+            const authHeader = response.headers['authorization'];
+
+            if (typeof authHeader !== "string") {
+                throw new Error("No Authorization header response");
             }
-            return token;
+
+            return authHeader.slice(7);
         });
 }
