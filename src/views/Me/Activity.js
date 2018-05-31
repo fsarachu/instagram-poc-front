@@ -23,7 +23,7 @@ class Activity extends Component {
                 case 'comment_mention': {
                     return {
                         date: data.timestamp,
-                        icon: 'comment',
+                        icon: 'at',
                         summary: `${data.username} mentioned you in a comment: `,
                         extraText: data.text,
                         meta: `${data.likeCount} likes`
@@ -33,7 +33,7 @@ class Activity extends Component {
                 case 'caption_mention': {
                     return {
                         date: data.timestamp,
-                        icon: 'comment',
+                        icon: 'at',
                         summary: `${data.username} commented you in a post's caption: `,
                         extraText: data.caption,
                         extraImages: [data.mediaUrl],
