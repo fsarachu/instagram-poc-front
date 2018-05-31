@@ -1,20 +1,21 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
-import {Card, Container, Icon, Image, Menu, Statistic} from "semantic-ui-react";
+import {Card, Container, Dimmer, Icon, Image, Loader, Menu, Statistic} from "semantic-ui-react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
 import {logout} from "../../redux/modules/session/actions";
-import {getAccount} from "../../redux/modules/account/actions";
+import {getAccount, syncAccount} from "../../redux/modules/account/actions";
 import {
     errorFetchingAccount,
+    errorSyncingAccount,
     getFollowersCount,
     getFollowsCount,
     getMedia,
     getName,
     getProfilePictureUrl,
     getUsername,
-    isFetchingAccount
+    isFetchingAccount, isSyncingAccount
 } from "../../redux/modules/account/selectors";
 
 class Me extends Component {
@@ -25,10 +26,14 @@ class Me extends Component {
 
     render() {
 
-        const {username, followersCount, followsCount, profilePictureUrl, media} = this.props;
+        const {username, followersCount, followsCount, profilePictureUrl, media, isFetchingAccount, isSyncingAccount, errorSyncingAccount} = this.props;
 
         return (
             <Container>
+
+                <Dimmer active={isFetchingAccount} inverted page>
+                    <Loader>Loading</Loader>
+                </Dimmer>
 
                 <Menu pointing>
                     <Menu.Item name='profile' as={Link} active to='/me/profile'/>
@@ -36,6 +41,9 @@ class Me extends Component {
                     <Menu.Menu position='right'>
                         <Menu.Item href={`//instagram.com/${username}`} target='_blank'>
                             <Image src={profilePictureUrl} avatar/> <span>{username}</span>
+                        </Menu.Item>
+                        <Menu.Item onClick={this.props.syncAccount}>
+                            <Icon loading={isSyncingAccount} color={errorSyncingAccount ? 'red' : 'black'} name='refresh'/>
                         </Menu.Item>
                         <Menu.Item name='logout' onClick={this.props.logout}/>
                     </Menu.Menu>
@@ -98,7 +106,10 @@ Me.propTypes = {
     media: PropTypes.array,
     isFetchingAccount: PropTypes.bool.isRequired,
     errorFetchingAccount: PropTypes.string,
+    isSyncingAccount: PropTypes.bool.isRequired,
+    errorSyncingAccount: PropTypes.string,
     getAccount: PropTypes.func.isRequired,
+    syncAccount: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
 };
 
@@ -113,6 +124,8 @@ const mapStateToProps = (state) => {
         media: getMedia(state),
         isFetchingAccount: isFetchingAccount(state),
         errorFetchingAccount: errorFetchingAccount(state),
+        isSyncingAccount: isSyncingAccount(state),
+        errorSyncingAccount: errorSyncingAccount(state),
     };
 };
 
@@ -122,6 +135,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     getAccount() {
         dispatch(getAccount());
+    },
+    syncAccount() {
+        dispatch(syncAccount());
     }
 });
 
