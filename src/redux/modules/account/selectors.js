@@ -37,3 +37,11 @@ export function isFetchingAccount(state) {
 export function errorFetchingAccount(state) {
     return getState(state).errorFetchingAccount;
 }
+
+export function isSyncingAccount(state) {
+    return getState(state).isSyncingAccount;
+}
+
+export function errorSyncingAccount(state) {
+    return getState(state).errorSyncingAccount;
+}
