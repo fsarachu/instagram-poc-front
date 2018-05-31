@@ -6,3 +6,10 @@ export function getAccount() {
             return response.data;
         });
 }
+
+export function syncAccount() {
+    return axios.post(`/me/sync`)
+        .then(response => {
+            return response.data;
+        });
+}
