@@ -13,11 +13,11 @@ export function getAccount() {
 
 export const GET_ACCOUNT_SUCCESS = `${NAMESPACE}GET_ACCOUNT_SUCCESS`;
 
-export function getAccountSuccess(username, name, followersCount, followsCount, profilePictureUrl, media) {
+export function getAccountSuccess(username, name, followersCount, followsCount, profilePictureUrl, media, activity) {
     return {
         type: GET_ACCOUNT_SUCCESS,
         payload: {
-            username, name, followersCount, followsCount, profilePictureUrl, media
+            username, name, followersCount, followsCount, profilePictureUrl, media, activity
         },
     };
 }

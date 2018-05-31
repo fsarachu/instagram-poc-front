@@ -26,6 +26,10 @@ export function getMedia(state) {
     return getState(state).media;
 }
 
+export function getActivity(state) {
+    return getState(state).activity;
+}
+
 export function isFetchingAccount(state) {
     return getState(state).isFetchingAccount;
 }

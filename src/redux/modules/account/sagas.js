@@ -5,8 +5,8 @@ import {getAccount as getAccountApi} from "./service";
 
 export function* getAccount(action) {
     try {
-        const {username, name, followersCount, followsCount, profilePictureUrl, media} = yield call(getAccountApi);
-        yield put(getAccountSuccess(username, name, followersCount, followsCount, profilePictureUrl, media));
+        const {username, name, followersCount, followsCount, profilePictureUrl, media, activity} = yield call(getAccountApi);
+        yield put(getAccountSuccess(username, name, followersCount, followsCount, profilePictureUrl, media, activity));
     } catch (error) {
         console.error(error);
         yield put(getAccountFailure("Couldn't get account"));
@@ -19,8 +19,12 @@ export function* watchGetAccount() {
 }
 
 
+
+
+
 export default function* rootSaga() {
     yield all([
         watchGetAccount(),
+        watchSyncAccount(),
     ]);
 };

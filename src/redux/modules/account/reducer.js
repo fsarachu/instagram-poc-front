@@ -7,6 +7,7 @@ const initialState = {
     followsCount: 0,
     profilePictureUrl: null,
     media: [],
+    activity: [],
     isFetchingAccount: false,
     errorFetchingAccount: null,
 };
@@ -33,7 +34,8 @@ export default function (state = initialState, action) {
                 followersCount,
                 followsCount,
                 profilePictureUrl,
-                media
+                media,
+                activity
             } = payload;
 
             return {
@@ -44,6 +46,7 @@ export default function (state = initialState, action) {
                 followsCount,
                 profilePictureUrl,
                 media,
+                activity,
                 isFetchingAccount: false,
                 errorFetchingAccount: null,
             };
