@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
-import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 
 import {loadApp} from "../../redux/modules/app/actions";
 import {errorLoading, isLoading} from "../../redux/modules/app/selectors";
@@ -10,6 +10,7 @@ import './App.css';
 import Login from "../../views/Login/Login";
 import Me from "../../views/Me/Me";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import {Container, Dimmer, Header, Icon, Loader} from "semantic-ui-react";
 
 class App extends Component {
 
@@ -21,12 +22,27 @@ class App extends Component {
 
         const {isLoading, errorLoading} = this.props;
 
-        if(isLoading) {
-            return <h1>Loading</h1>;
+        if (isLoading) {
+            return (
+                <Container>
+                    <Dimmer active inverted page>
+                        <Loader>Loading</Loader>
+                    </Dimmer>
+                </Container>
+            );
         }
 
-        if(errorLoading) {
-            return <h1>ERROR: {errorLoading}</h1>;
+        if (errorLoading) {
+            return (
+                <Container>
+                    <Dimmer active inverted page>
+                        <Header as='h2' icon color='red'>
+                            <Icon name='warning circle'/>
+                            Ooops! {errorLoading}
+                        </Header>
+                    </Dimmer>
+                </Container>
+            );
         }
 
         return (
