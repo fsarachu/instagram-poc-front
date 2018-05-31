@@ -59,7 +59,7 @@ class Me extends Component {
                 </Container>
 
                 <Container>
-                    <Card.Group>
+                    <Card.Group centered>
                         {media.map(m => (
                             <Card key={m.id}>
                                 <Image src={m.media_url} fluid/>
