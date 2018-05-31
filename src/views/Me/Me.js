@@ -29,7 +29,7 @@ class Me extends Component {
 
     render() {
 
-        const {match, username, followersCount, followsCount, profilePictureUrl, media, isFetchingAccount, errorFetchingAccount, isSyncingAccount, errorSyncingAccount} = this.props;
+        const {location, match, username, followersCount, followsCount, profilePictureUrl, media, isFetchingAccount, errorFetchingAccount, isSyncingAccount, errorSyncingAccount} = this.props;
 
         return (
             <Container>
@@ -46,8 +46,8 @@ class Me extends Component {
                 </Dimmer>
 
                 <Menu pointing>
-                    <Menu.Item name='activity' as={Link} to='/me/activity'/>
-                    <Menu.Item name='profile' as={Link} active to='/me/profile'/>
+                    <Menu.Item name='activity' as={Link} active={location.pathname.endsWith('/me/activity')} to='/me/activity'/>
+                    <Menu.Item name='profile' as={Link} active={location.pathname.endsWith('/me/profile')} to='/me/profile'/>
                     <Menu.Menu position='right'>
                         <Menu.Item href={`//instagram.com/${username}`} target='_blank'>
                             <Image src={profilePictureUrl} avatar/> <span>{username}</span>
