@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
-import {Card, Container, Dimmer, Icon, Image, Loader, Menu, Statistic} from "semantic-ui-react";
+import {Container, Dimmer, Header, Icon, Image, Loader, Menu, Statistic} from "semantic-ui-react";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, Redirect, Route, Switch} from "react-router-dom";
 
 import {logout} from "../../redux/modules/session/actions";
 import {getAccount, syncAccount} from "../../redux/modules/account/actions";
@@ -15,8 +15,11 @@ import {
     getName,
     getProfilePictureUrl,
     getUsername,
-    isFetchingAccount, isSyncingAccount
+    isFetchingAccount,
+    isSyncingAccount
 } from "../../redux/modules/account/selectors";
+import Profile from "./Profile";
+import Activity from "./Activity";
 
 class Me extends Component {
 
@@ -26,7 +29,7 @@ class Me extends Component {
 
     render() {
 
-        const {username, followersCount, followsCount, profilePictureUrl, media, isFetchingAccount, isSyncingAccount, errorSyncingAccount} = this.props;
+        const {match, username, followersCount, followsCount, profilePictureUrl, media, isFetchingAccount, errorFetchingAccount, isSyncingAccount, errorSyncingAccount} = this.props;
 
         return (
             <Container>
@@ -35,9 +38,16 @@ class Me extends Component {
                     <Loader>Loading</Loader>
                 </Dimmer>
 
+                <Dimmer active={!!errorFetchingAccount} inverted page>
+                    <Header as='h2' icon color='red'>
+                        <Icon name='warning circle'/>
+                        Ooops! {errorFetchingAccount}
+                    </Header>
+                </Dimmer>
+
                 <Menu pointing>
+                    <Menu.Item name='feed' as={Link} to='/me/feed'/>
                     <Menu.Item name='profile' as={Link} active to='/me/profile'/>
-                    <Menu.Item name='mentions' as={Link} to='/me/mentions'/>
                     <Menu.Menu position='right'>
                         <Menu.Item href={`//instagram.com/${username}`} target='_blank'>
                             <Image src={profilePictureUrl} avatar/> <span>{username}</span>
@@ -66,30 +76,21 @@ class Me extends Component {
                     </Statistic.Group>
                 </Container>
 
-                <Container>
-                    <Card.Group centered>
-                        {media.map(m => (
-                            <Card key={m.id}>
-                                <Image src={m.media_url} fluid/>
-                                <Card.Content>
-                                    <Card.Header>{m.username}</Card.Header>
-                                    <Card.Description>{m.caption}</Card.Description>
-                                </Card.Content>
-                                <Card.Content extra>
-                                    <span>
-                                       <Icon name='heart'/>
-                                        {m.like_count} Likes
-                                    </span>
-                                    &nbsp;
-                                    <span>
-                                       <Icon name='comments'/>
-                                        {m.comments_count} Comments
-                                   </span>
-                                </Card.Content>
-                            </Card>
-                        ))}
-                    </Card.Group>
-                </Container>
+                <Switch>
+
+                    <Route
+                        path={`${match.url}/profile`}
+                        component={Profile}
+                    />
+
+                    <Route
+                        path={`${match.url}/feed`}
+                        component={Activity}
+                    />
+
+                    <Route render={() => <Redirect to={`${match.url}/profile`}/>}/>
+
+                </Switch>
 
             </Container>
         );
@@ -111,6 +112,8 @@ Me.propTypes = {
     getAccount: PropTypes.func.isRequired,
     syncAccount: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
+    location: PropTypes.object,
+    match: PropTypes.object,
 };
 
 
