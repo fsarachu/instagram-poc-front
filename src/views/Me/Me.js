@@ -46,7 +46,7 @@ class Me extends Component {
                 </Dimmer>
 
                 <Menu pointing>
-                    <Menu.Item name='feed' as={Link} to='/me/feed'/>
+                    <Menu.Item name='feed' as={Link} to='/me/activity'/>
                     <Menu.Item name='profile' as={Link} active to='/me/profile'/>
                     <Menu.Menu position='right'>
                         <Menu.Item href={`//instagram.com/${username}`} target='_blank'>
@@ -84,7 +84,7 @@ class Me extends Component {
                     />
 
                     <Route
-                        path={`${match.url}/feed`}
+                        path={`${match.url}/activity`}
                         component={Activity}
                     />
 
