@@ -25,7 +25,7 @@ class Confirm extends Component {
     }
 
     render() {
-        const {hasAccessToken, selectedPage, userName, isLoggingIn, loginError, userPicture} = this.props;
+        const {hasAccessToken, selectedPage, isLoggingIn, loginError, userPicture} = this.props;
 
         if (!hasAccessToken || !selectedPage) {
             return (
@@ -42,7 +42,7 @@ class Confirm extends Component {
                     <Image src={selectedPage.picture} circular/>
 
                     <Header.Content>
-                        Hey {userName}, you will connect your business page "{selectedPage.name}" to UPshow
+                        You will connect your business page "{selectedPage.name}" to UPshow
                     </Header.Content>
                 </Header>
 
