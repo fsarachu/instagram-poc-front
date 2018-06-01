@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import {Container, Feed, Segment} from "semantic-ui-react";
+import moment from "moment";
+
 import {connect} from "react-redux";
 import {getActivity} from "../../redux/modules/account/selectors";
 
@@ -9,35 +11,37 @@ class Activity extends Component {
     getEvents() {
         return this.props.activity.map(({event, data}) => {
 
+            const common = {
+                date: moment(data.timestamp).fromNow(),
+                meta: `0 Likes`
+            };
+
             switch(event) {
                 case 'post_comment': {
                     return {
-                        date: data.timestamp,
+                        ...common,
                         icon: 'comment',
                         summary: `${data.username} commented your post: `,
                         extraText: data.text,
-                        meta: `${data.likeCount} likes`
                     };
                 }
 
                 case 'comment_mention': {
                     return {
-                        date: data.timestamp,
+                        ...common,
                         icon: 'at',
                         summary: `${data.username} mentioned you in a comment: `,
                         extraText: data.text,
-                        meta: `${data.likeCount} likes`
                     };
                 }
 
                 case 'caption_mention': {
                     return {
-                        date: data.timestamp,
+                        ...common,
                         icon: 'at',
                         summary: `${data.username} commented you in a post's caption: `,
                         extraText: data.caption,
                         extraImages: [data.mediaUrl],
-                        meta: `${data.likeCount} likes`
                     };
                 }
 
