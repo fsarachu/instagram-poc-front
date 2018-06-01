@@ -4,6 +4,14 @@ import {Card, Container, Icon, Image} from "semantic-ui-react";
 import {connect} from "react-redux";
 import {getMedia} from "../../redux/modules/account/selectors";
 
+function truncate(text) {
+    if(typeof text === 'string' && text.length > 60) {
+        return text.slice(0, 90) + '...';
+    }
+
+    return text;
+}
+
 class Profile extends Component {
     render() {
         return (
@@ -14,7 +22,7 @@ class Profile extends Component {
                             <Image style={{height: 180, objectFit: 'cover'}} src={m.media_url} fluid/>
                             <Card.Content>
                                 <Card.Header>{m.username}</Card.Header>
-                                <Card.Description>{m.caption}</Card.Description>
+                                <Card.Description>{truncate(m.caption)}</Card.Description>
                             </Card.Content>
                             <Card.Content extra>
                                     <span>
