@@ -11,7 +11,7 @@ class Profile extends Component {
                 <Card.Group centered>
                     {this.props.media.map(m => (
                         <Card key={m.id}>
-                            <Image src={m.media_url} fluid/>
+                            <Image style={{height: 180, objectFit: 'cover'}} src={m.media_url} fluid/>
                             <Card.Content>
                                 <Card.Header>{m.username}</Card.Header>
                                 <Card.Description>{m.caption}</Card.Description>
