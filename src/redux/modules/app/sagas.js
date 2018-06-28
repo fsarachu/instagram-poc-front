@@ -5,19 +5,27 @@ import {setToken} from "../session/actions";
 
 function loadFacebookSDK() {
     return new Promise((resolve, reject) => {
-        const d = window.document;
-        const s = 'script';
-        const id = 'facebook-jssdk';
+        try {
+            const d = window.document;
+            const s = 'script';
+            const id = 'facebook-jssdk';
 
-        if (!d.getElementById(id)) {
-            const fjs = d.getElementsByTagName(s)[0];
-            const js = d.createElement(s);
-            js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            js.onload = resolve;
-            js.onerror = reject;
-            fjs.parentNode.insertBefore(js, fjs);
+            if (!d.getElementById(id)) {
+                const fjs = d.getElementsByTagName(s)[0];
+                const js = d.createElement(s);
+                js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                js.onload = resolve;
+                js.onerror = reject;
+                fjs.parentNode.insertBefore(js, fjs);
+            } else {
+                console.log('Facebook SDK script already injected');
+                resolve();
+            }
+        } catch (e) {
+            reject(e);
         }
+
     });
 }
 
