@@ -15,10 +15,6 @@ export function login() {
             'email',
             'manage_pages',
             'instagram_basic',
-            'instagram_manage_insights',
-            'read_insights',
-            'instagram_manage_comments',
-            'read_audience_network_insights',
         ].join(',');
 
         window.FB.login(callback, {scope})
